@@ -1,0 +1,153 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="2925362996" file="D:\github\Matlab-Anser\Anser EMT.prj" location="D:\github\Matlab-Anser" name="Anser EMT" target="target.mlapps" target-name="Package App">
+    <param.appname>Anser EMT</param.appname>
+    <param.authnamewatermark>H. A. Jaeger, K. O'Donoghue</param.authnamewatermark>
+    <param.email>h.jaeger@umail.ucc.ie</param.email>
+    <param.company>University College Cork, Ireland</param.company>
+    <param.icon>${PROJECT_ROOT}\Anser EMT_resources\icon_24.png</param.icon>
+    <param.icons>
+      <file>${PROJECT_ROOT}\Anser EMT_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\Anser EMT_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\Anser EMT_resources\icon_16.png</file>
+    </param.icons>
+    <param.summary>Graphical User Interface for the Anser EMT platform</param.summary>
+    <param.description>Copyright (c) 2017, H. A. Jaeger, K O' Donoghue
+&lt;br&gt;
+All rights reserved.
+&lt;br&gt;
+This code is licensed under the BSD 3-Clause License.
+
+To acknowledge Anser EMT as a platform, please cite the OpenEMT website 
+and the following publications when publishing work that uses or incorporates Anser EMT:
+&lt;br&gt;&lt;br&gt;
+Jaeger H.A., Franz A.M., O' Donoghue K., Seitel., Trauzettel F., Maier-Hein L., Cantillon-Murphy P.
+"Anser EMT: the first open-source electromagnetic tracking platform for image-guided interventions".
+International Journal of Computer Assisted Radiology and Surgery, June 2017, 12(6):1059–1067.
+PMID: &lt;a href="https://www.ncbi.nlm.nih.gov/pubmed/28357627"&gt;28357627&lt;/a&gt;, DOI: &lt;a href="https://doi.org/10.1007/s11548-017-1568-7"&gt;10.1007/s11548-017-1568-7&lt;/a&gt;
+&lt;br&gt;&lt;br&gt;
+This work was supported by the Irish Health Research Board, Science Foundation Ireland
+and the New Horizon Framework Programme Grant Agreement (details in paper).
+The authors would also like to acknowledge the German Cancer Research Center (DKFZ), Heidelberg
+and the Institute of Image-Guided Surgery (IHU), Strasbourg in supporting this work.</param.description>
+    <param.screenshot />
+    <param.version>1.0</param.version>
+    <param.products.name>
+      <item>MATLAB</item>
+      <item>Data Acquisition Toolbox</item>
+      <item>Optimization Toolbox</item>
+    </param.products.name>
+    <param.products.id>
+      <item>1</item>
+      <item>47</item>
+      <item>6</item>
+    </param.products.id>
+    <param.products.version>
+      <item>9.4</item>
+      <item>3.13</item>
+      <item>8.1</item>
+    </param.products.version>
+    <param.platforms />
+    <param.output>D:\github\Matlab-Anser</param.output>
+    <param.guid>3ce1b35e-8aee-4069-9e3f-ccc7fe7cb881</param.guid>
+    <unset>
+      <param.screenshot />
+      <param.version />
+      <param.platforms />
+      <param.output />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\Anser.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\daq\dataListen.m</file>
+      <file>${PROJECT_ROOT}\daq\fDAQAcquire.m</file>
+      <file>${PROJECT_ROOT}\daq\fDAQMap.m</file>
+      <file>${PROJECT_ROOT}\daq\fDAQSetup.m</file>
+      <file>${PROJECT_ROOT}\data\sys.mat</file>
+      <file>${PROJECT_ROOT}\fSysSetup.m</file>
+      <file>${PROJECT_ROOT}\igtlink\igtlinkAPI\igtlComputeCrc.m</file>
+      <file>${PROJECT_ROOT}\igtlink\igtlinkAPI\igtlConnect.m</file>
+      <file>${PROJECT_ROOT}\igtlink\igtlinkAPI\igtlDisconnect.m</file>
+      <file>${PROJECT_ROOT}\igtlink\igtlinkAPI\igtlSendTransform.m</file>
+      <file>${PROJECT_ROOT}\igtlink\igtlinkAPI\igtlTimestampNow.m</file>
+      <file>${PROJECT_ROOT}\model\spiralCoilDimensionCalc.m</file>
+      <file>${PROJECT_ROOT}\model\spiralCoilFieldCalcMatrix.m</file>
+      <file>${PROJECT_ROOT}\user\calibration\fCalibrate.m</file>
+      <file>${PROJECT_ROOT}\user\calibration\fCalPoints.m</file>
+      <file>${PROJECT_ROOT}\user\calibration\fCheck.m</file>
+      <file>${PROJECT_ROOT}\user\calibration\fGetCalField.m</file>
+      <file>${PROJECT_ROOT}\user\misc\fTitle.m</file>
+      <file>${PROJECT_ROOT}\user\objective\objectiveCoilSquareCalc3D.m</file>
+      <file>${PROJECT_ROOT}\user\objective\objectiveScalingOffsetZ.m</file>
+      <file>${PROJECT_ROOT}\user\system\fSysDAQUpdate.m</file>
+      <file>${PROJECT_ROOT}\user\system\fSysDecodeField.m</file>
+      <file>${PROJECT_ROOT}\user\system\fSysGetField.m</file>
+      <file>${PROJECT_ROOT}\user\system\fSysSave.m</file>
+      <file>${PROJECT_ROOT}\user\system\fSysSensor.m</file>
+      <file>${PROJECT_ROOT}\user\tracking\fGetSensorPosition.m</file>
+      <file>${PROJECT_ROOT}\user\tracking\fSphericalToMatrix.m</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="D:\github" name="Matlab-Anser" optional="false">D:\github\Matlab-Anser</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2018a</root>
+      <toolboxes>
+        <toolbox name="fixedpoint" />
+        <toolbox name="matlabcoder" />
+        <toolbox name="matlabhdlcoder" />
+        <toolbox name="embeddedcoder" />
+        <toolbox name="gpucoder" />
+        <toolbox name="polyspacebugfinder" />
+      </toolboxes>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+      <toolbox>
+        <gpucoder>
+          <enabled>true</enabled>
+        </gpucoder>
+      </toolbox>
+      <toolbox>
+        <polyspacebugfinder>
+          <enabled>true</enabled>
+        </polyspacebugfinder>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
