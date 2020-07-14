@@ -8,7 +8,7 @@
 
 SYSTEM = '7x7';
 DAQ = 'nidaq621Xoem';
-BOARDID = 'Dev1';
+BOARDID = 'Dev3';
 SAMPLESIZE = 50000;
 MODELTYPE = 'exact';
 

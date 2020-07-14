@@ -30,11 +30,12 @@ l_scale=1.000;
 spacing_scale=1.000;
 thickness_scale=1;
 centre_point_scale=1.000;
-[x_matrix,y_matrix,z_matrix] = coil_regenerate('7x7',l_scale,spacing_scale,thickness_scale,centre_point_scale);
-current_scalar=1;
-[Hx,Hy,Hz]= spiralCoilFieldCalcMatrix(1*current_scalar,x_matrix,y_matrix,z_matrix,x,y,z); 
+%[x_matrix,y_matrix,z_matrix] = coil_regenerate('7x7',l_scale,spacing_scale,thickness_scale,centre_point_scale);
+%current_scalar=1;
+%[Hx,Hy,Hz]= spiralCoilFieldCalcMatrix(1*current_scalar,x_matrix,y_matrix,z_matrix,x,y,z); 
 
 %[Hx,Hy,Hz]= spiralCoilFieldCalcMatrix(1,scale_temp*sys.xcoil,scale_temp*sys.ycoil,scale_temp*sys.zcoil,x,y,z); 
+[Hx,Hy,Hz]= spiralCoilFieldCalcMatrix(1,sys.xcoil,sys.ycoil,sys.zcoil,x,y,z); 
 
 
 % Calculate the net magnetic flux cutting the tracking sensor coil.
@@ -42,4 +43,4 @@ fluxModel=(sys.BScaleActive)'.*(Hx.*sin(theta).*cos(phi)+Hy.*sin(theta).*sin(phi
 
 
 % Return the difference between the calculated magnetic flux and the sensed magnetic flux due to a single emitter coil
-out = fluxModel - fluxReal*current_scalar;
+out = fluxModel - fluxReal;

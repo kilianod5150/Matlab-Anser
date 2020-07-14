@@ -42,10 +42,10 @@ for i = 1:length(sensors)
     %ch(i+1).Range = [-.2,.2];
 end
 
-ch_clock = addCounterOutputChannel(DAQ,'Dev1', 'ctr0', 'PulseGeneration');
+ch_clock = addCounterOutputChannel(DAQ,DAQString, 'ctr0', 'PulseGeneration');
 %ch_clock.Frequency=10000000;
-%ch_clock.Frequency=1250000;
-ch_clock.Frequency=625000;
+ch_clock.Frequency=1250000;
+%ch_clock.Frequency=625000;
 % Set the sampling frequency, samples per scan and
 DAQ.Rate = sampleFreq;
 DAQ.NumberOfScans = numSamples;

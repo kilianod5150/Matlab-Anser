@@ -28,9 +28,11 @@ objectiveCoil3D = @(currentPandO)objectiveCoilSquareCalc3D(currentPandO, sys, sy
     upperbound = [0.5, 0.5, 0.5, pi, 3*pi];
 
     % Initialises the least squares solver.
-    [solution,resnorm_store]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,sys.lqOptions);
+    [solution,resnorm_store,residual,exitflag,output]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,sys.lqOptions);
+    %sum(residual.^2)
     % Check if the residual is small enough
-    
+    %display([resnorm_store resnorm_store./mean(abs(sys.BField))])
+    display(1000*sqrt(solution(1).^2+solution(2).^2+solution(3).^2));
     if solution(5) > 2*pi
         solution(5) = solution(5) - 2*pi;
     elseif solution(5) < -2*pi

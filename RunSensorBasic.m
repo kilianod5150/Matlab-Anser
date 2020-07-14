@@ -12,13 +12,15 @@ BOARDID = 'Dev1';
 SAMPLESIZE = 5000;
 MODELTYPE = 'exact';
 
+global Fs
+Fs=100e3;
 
 % Place the sensor channels to use in this vector. Add further channels to
 % this vector if more sensors are required
-sensorsToTrack = [4];
+sensorsToTrack = [1];
 
 % Aquisition refresh rate in Hertz
-refreshRate = 500;
+refreshRate = 1;
 
 % Call the setup function for the system.
 sys = fSysSetup(sensorsToTrack, SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);

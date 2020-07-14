@@ -7,18 +7,20 @@
 % Use this script as a reference program for writing EMT applications 
 % with OpenIGTLink support.
 
+global Fs;
 SYSTEM = '7x7';
 DAQ = 'nidaq621Xoem';
-BOARDID = 'Dev1';
-SAMPLESIZE = 250;
+BOARDID = 'Dev3';
+SAMPLESIZE = 5000;
 MODELTYPE = 'exact';
 
+Fs=100e3;
 % Enable OpenIGTLink
 IGTENABLE = 1;
 
 % Settings for the tracking system
 % List of sensors to initialise.
-sensorsToTrack = [3 4];
+sensorsToTrack = [1];
 
 % Aquisition refresh rate in Hertz
 refreshRate = 1000;
