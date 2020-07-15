@@ -10,7 +10,8 @@ SAMPLESIZE = 5000;
 MODELTYPE = 'exact';
 
 clear measurements
-
+global Fs
+Fs=100e3;
 % USER INPUT CALIBRATION SETTINGS
 sensorsToTrack = input('Enter the channel to calibrate: ');   % (2) THE INDEX OF THE SENSOR TO TRACK
 measurementCount = input('Enter the # of measurements to acquire: ');;  % (3) THE NUMBER OF MEASUREMENTS USED FOR CALIBRATION

@@ -3,7 +3,7 @@
 % All rights reserved.
 % This code is licensed under the BSD 3-Clause License.
 
-function solution = fSysDecodeField(sys)
+function solution = fSysDecodeFieldWithGain(sys)
 % fSysDecodeField.m
 % Resolved the sensor position from the a set of 
 
@@ -20,27 +20,17 @@ if strcmpi(sys.modelType,'FAST') == 1
    sys.BScaleActive = sys.BScaleActive * 25.1515; % Constant from optimisation process
 end
 
-objectiveCoil3D = @(currentPandO)objectiveCoilSquareCalc3D(currentPandO, sys, sys.BField);
+objectiveCoil3D = @(currentPandO)objectiveCoilSquareCalc3DWithGain(currentPandO, sys, sys.BField);
     
     % Set the boundry conditions for the solver.
 
-    lowerbound = [-0.5, -0.5, 0, -pi, -3*pi];
-    upperbound = [0.5, 0.5, 0.5, pi, 3*pi];
+    lowerbound = [-0.5, -0.5, 0, -pi, -3*pi 0.5];
+    upperbound = [0.5, 0.5, 0.5, pi, 3*pi 1.5];
 
-    options=sys.lqOptions;
-    options.StepTolerance=1e-6;
-    options.FunctionTolerance=1e-16;
     % Initialises the least squares solver.
-    %[solution,resnorm_store,residual,exitflag,output,~,jacobian]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,sys.lqOptions);
-     [solution,resnorm_store,residual,exitflag,output,~,jacobian]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,options);
-    
-    resnorm_percentage_mean= 100*mean(abs(residual./sys.BField));
-   
-    CI = nlparci(solution,residual,'jacobian',jacobian);
-    %CI(:,2)-CI(:,1)
-    CI_R_m=sqrt( (CI(1,2)-CI(1,1))^2+(CI(2,2)-CI(2,1))^2+(CI(3,2)-CI(3,1))^2 );
-    display([1000*CI_R_m resnorm_percentage_mean]);
+    [solution,resnorm_store,residual,exitflag,output,~,jacobian]= lsqnonlin(objectiveCoil3D, [sys.estimateInit(sys.SensorNo,:) 1],lowerbound,upperbound,sys.lqOptions);
     %sum(residual.^2)
+    display(solution);
     % Check if the residual is small enough
     %display([resnorm_store mean(abs(residual)./(abs(sys.BField))) ] )
     %display(abs(sys.BField)');

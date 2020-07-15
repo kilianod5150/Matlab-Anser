@@ -19,7 +19,7 @@ MODELTYPE = 'exact';
 
 % Channel the DAQ to inspect. This does NOT directly corresponding to the sensor
 % channelLook at the DAQ pin mapping
-sensorsToTrack = [3];
+sensorsToTrack = [1];
 
 % Refresh rate of the position acquisition (Hz)
 refreshRate = 20;

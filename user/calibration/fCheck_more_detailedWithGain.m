@@ -1,4 +1,4 @@
-function [rmsErrorBz,xError_out,yError_out,zError_out,Percentile_90th_Error] = fCheck_remove_mean(sys)
+function [rmsErrorBz,xError_out,yError_out,zError_out,rError,Percentile_90th_Error,solution,resnorm,residual,firstorderopt,iterations] = fCheck_more_detailed(sys)
 % fCheck.m
 % Evaluated the quality of the system calibration by providing an error metric in millimeters
 % Function uses the calibration vector to resolve each of the testpoint positions
@@ -18,7 +18,7 @@ options = optimset('TolFun',1e-17,'TolX',1e-8,'MaxFunEvals',500,'MaxIter',500,'D
 
 
 % Generate a matrix of 5-DOF solution vectors. One vector for each resolved testpoint
-solution = zeros(length(sys.ztestpoint),5);
+solution = zeros(length(sys.ztestpoint),6);
 
 
 % Iterate over the field strengths detected at each testpoint and solve for the position
@@ -26,7 +26,7 @@ for i =1:length(sys.ztestpoint)
     
 
     % Set the initial position for the solver to the analytically predefined testpoint positions. Theta and Phi are initialised to zero, as the sensor is placed axially in the test block.
-    x0 = [sys.xtestpoint(i),sys.ytestpoint(i), sys.ztestpoint(i), pi, 0];
+    x0 = [sys.xtestpoint(i),sys.ytestpoint(i), sys.ztestpoint(i), pi, 0 1];
     % Extract the field strength values sensed at a particular testpoint
     fluxReal = sys.BStoreActive(:,i);
 	        
@@ -35,15 +35,15 @@ for i =1:length(sys.ztestpoint)
     % 'currentP&O' is the solution vector we declare as the solver's variable parameter.
     % 'sys' is the system object.
     % 'fluxReal' contains the field strength measurements for the current testpoint.
-    objectiveCoil3D = @(currentPandO)objectiveCoilSquareCalc3D(currentPandO, sys, fluxReal);
+    objectiveCoil3D = @(currentPandO)objectiveCoilSquareCalc3DWithGain(currentPandO, sys, fluxReal);
     
     
     % Run the algorithm depending on the setup configuration.
 
     %solution(i,:)= lsqnonlin(objectiveCoil3D,x0,[-.25 -.25 0 -pi -2*pi],[.25 .25 0.5 pi 2*pi],options);  
-    solution(i,:)= lsqnonlin(objectiveCoil3D,x0,[-.25 -.25 0 -5*pi -5*pi],[.25 .25 0.5 5*pi 5*pi],options);  
-
-
+    [solution(i,:),resnorm(i),residual(i,:),~,output]= lsqnonlin(objectiveCoil3D,x0,[-.25 -.25 0 -5*pi -5*pi .9],[.25 .25 0.5 5*pi 5*pi 1.1],options);  
+    firstorderopt(i)=output.firstorderopt;
+    iterations(i)=output.iterations;
 end
 
 
