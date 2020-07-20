@@ -20,14 +20,15 @@ MODELTYPE = 'exact';
 Fs=100e3;
 
 sensorToCheck = [1];
-
+addpath(genpath(pwd))
+fTitle();
 
 % Select the desired sensor channel. This will also ensure the appropriate calibration
 % parameters are saved after calibration.
-sys_clean = fSysSetup(sensorToCheck,SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);
+%sys_clean = fSysSetup(sensorToCheck,SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);
 load('sys.mat');
-
-sys_clean = fSysSensor(sys, sensorToCheck);
+sys_clean=sys;
+%sys_clean = fSysSensor(sys, sensorToCheck);
 sys_distorted=sys_clean;
 
 % Acquire the testpoints necessary for testing. 
