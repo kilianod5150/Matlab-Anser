@@ -15,8 +15,11 @@ MODELTYPE = 'exact';
 % Each sensor must be calibrated seperatly due to gain variations
 % in the system amplifier electronics.
 % Sensor indices begin at '1'
+Fs=100e3;
 
-sensorToCheck = [4];
+sensorToCheck = [1];
+
+
 
 % Select the desired sensor channel. This will also ensure the appropriate calibration
 % parameters are saved after calibration.

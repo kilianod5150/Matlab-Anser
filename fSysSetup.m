@@ -121,6 +121,8 @@ t=0:Ts:(numSamples - 1) * Ts;
 % Define the transmission frequencies of the emitter coil
 % These will be used for demodulation
 F=[20000 22000 24000 26000 28000 30000 32000 34000];
+%F=[2000 2200 2400 2600 2800 3000 3200 3400];
+%F=[2000 2100 2200 2300 2400 2500 2600 2700];
 % Define the demodulation matrix for the asynchronous demodulation scheme
 E=[exp(2*pi*F(1)*t*1i); exp(2*pi*F(2)*t*1i);  exp(2*pi*F(3)*t*1i); exp(2*pi*F(4)*t*1i); exp(2*pi*F(5)*t*1i); exp(2*pi*F(6)*t*1i); exp(2*pi*F(7)*t*1i) ;exp(2*pi*F(8)*t*1i)]; %exponential matrix thing that handles the demodulation
 E=E';
@@ -166,7 +168,7 @@ fprintf('DAQ Type %s\n', DAQType);
 %% Position algorithm parameters
 % Define parameters for position sensing algorithm
 options = optimset('TolFun',1e-16,'TolX',1e-6,'MaxFunEvals',500,'MaxIter',40,'Display','off'); % sets parameters for position algorithm
-options = optimoptions(@lsqnonlin,'UseParallel',false,'TolFun',1e-16,'TolX',1e-6,'MaxFunEvals',500,'MaxIter',40,'Display','off');
+options = optimoptions(@lsqnonlin,'UseParallel',false,'TolFun',1e-16,'TolX',1e-6,'MaxFunEvals',500,'MaxIter',40,'Display','iter');
 % Sets the threshold for the algorithm residual, if the residual is greater than this, the algorithm has failed
 resThreshold=1e-15; 
 

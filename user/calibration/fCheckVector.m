@@ -1,4 +1,4 @@
-function rmsErrorBz = fCheck(sys)
+function rError = fCheckVector(sys)
 % fCheck.m
 % Evaluated the quality of the system calibration by providing an error metric in millimeters
 % Function uses the calibration vector to resolve each of the testpoint positions
@@ -50,12 +50,12 @@ xError=(sys.xtestpoint' - solution(:,1));
 yError=(sys.ytestpoint' - solution(:,2));
 zError=(sys.ztestpoint' - solution(:,3));
 
-xError=xError-mean(xError);
-yError=yError-mean(yError);
-zError=zError-mean(zError);
+%xError=xError-mean(xError);
+%yError=yError-mean(yError);
+%zError=zError-mean(zError);
 % Calculate the  RMS error in millimeters.
 rError = sqrt(xError.^2+yError.^2+zError.^2); 
-rmsErrorBz = 1000*mean(rError);
+%rmsErrorBz = 1000*mean(rError);
 
 
 end

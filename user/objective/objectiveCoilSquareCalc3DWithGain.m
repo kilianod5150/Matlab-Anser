@@ -3,7 +3,7 @@
 % All rights reserved.
 % This code is licensed under the BSD 3-Clause License.
 
-function [out]= objectiveCoilSquareCalc3D(currentPandO, sys, fluxReal)
+function [out]= objectiveCoilSquareCalc3DWithGain(currentPandO, sys, fluxReal)
 % objectiveCoilSquareCalc3D.m
 % Objective function to calculate the difference between the modelled and measured magnetic flux values due to a single pcb emitter coil.
 % This is the 'Cost' function for the LM algorithm. Each iteration of LMA executes this function 8 times, once for each coil.
@@ -21,7 +21,7 @@ y = currentPandO(2);
 z = currentPandO(3);
 theta = currentPandO(4);
 phi = currentPandO(5);
-
+gain= currentPandO(6);
 
 % Calculate the magnetic field intensity at [x,y,z] due to an emitter coil whose copper tracks are traced by [xcoil, ycoil, zcoil]
 
@@ -39,7 +39,7 @@ phi = currentPandO(5);
 
 
 % Calculate the net magnetic flux cutting the tracking sensor coil.
-fluxModel=(sys.BScaleActive)'.*(Hx.*sin(theta).*cos(phi)+Hy.*sin(theta).*sin(phi)+Hz.*cos(theta));
+fluxModel=gain*(sys.BScaleActive)'.*(Hx.*sin(theta).*cos(phi)+Hy.*sin(theta).*sin(phi)+Hz.*cos(theta));
 
 
 % Return the difference between the calculated magnetic flux and the sensed magnetic flux due to a single emitter coil

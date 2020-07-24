@@ -1,4 +1,4 @@
-function rmsErrorBz = fCheck(sys)
+function [rmsErrorBz,xError_out,yError_out,zError_out,rError,Percentile_90th_Error,solution,resnorm,residual,firstorderopt,iterations,CI_R_m] = fCheck_more_detailed(sys)
 % fCheck.m
 % Evaluated the quality of the system calibration by providing an error metric in millimeters
 % Function uses the calibration vector to resolve each of the testpoint positions
@@ -13,6 +13,7 @@ function rmsErrorBz = fCheck(sys)
 
 
 % Define position algorithm parameters.
+%options = optimset('TolFun',1e-17,'TolX',1e-8,'MaxFunEvals',500,'MaxIter',500,'Display','final');
 options = optimset('TolFun',1e-17,'TolX',1e-8,'MaxFunEvals',500,'MaxIter',500,'Display','off');
 
 
@@ -39,9 +40,13 @@ for i =1:length(sys.ztestpoint)
     
     % Run the algorithm depending on the setup configuration.
 
-    solution(i,:)= lsqnonlin(objectiveCoil3D,x0,[-.25 -.25 0 -5*pi -5*pi],[.25 .25 0.5 5*pi 5*pi],options);  
+    %solution(i,:)= lsqnonlin(objectiveCoil3D,x0,[-.25 -.25 0 -pi -2*pi],[.25 .25 0.5 pi 2*pi],options);  
+    [solution(i,:),resnorm(i),residual(i,:),~,output,~,jacobian]= lsqnonlin(objectiveCoil3D,x0,[-.25 -.25 0 -5*pi -5*pi],[.25 .25 0.5 5*pi 5*pi],options);  
+    firstorderopt(i)=output.firstorderopt;
+    iterations(i)=output.iterations;
+    CI = nlparci(solution(i,:),residual(i,:),'jacobian',jacobian);
+    CI_R_m(i)=sqrt( (CI(1,2)-CI(1,1))^2+(CI(2,2)-CI(2,1))^2+(CI(3,2)-CI(3,1))^2 );
     
-
 end
 
 
@@ -50,12 +55,26 @@ xError=(sys.xtestpoint' - solution(:,1));
 yError=(sys.ytestpoint' - solution(:,2));
 zError=(sys.ztestpoint' - solution(:,3));
 
+xError_out=xError;
+yError_out=yError;
+zError_out=zError;
+
 xError=xError-mean(xError);
 yError=yError-mean(yError);
 zError=zError-mean(zError);
+
 % Calculate the  RMS error in millimeters.
 rError = sqrt(xError.^2+yError.^2+zError.^2); 
+Percentile_90th_Error=1000*prctile(rError,90);
 rmsErrorBz = 1000*mean(rError);
 
+% figure
+% scatter3(solution(:,1),solution(:,2),solution(:,3));
+% hold on
+% scatter3(sys.xtestpoint',sys.ytestpoint',sys.ztestpoint'-mean(zError_out));
+% 
+% xlabel('x [m]')
+% ylabel('y [m]')
+% zlabel('z [m]')
 
 end

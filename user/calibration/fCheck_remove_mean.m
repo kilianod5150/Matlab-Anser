@@ -14,7 +14,7 @@ function [rmsErrorBz,xError_out,yError_out,zError_out,Percentile_90th_Error] = f
 
 % Define position algorithm parameters.
 %options = optimset('TolFun',1e-17,'TolX',1e-8,'MaxFunEvals',500,'MaxIter',500,'Display','final');
-options = optimset('TolFun',1e-17,'TolX',1e-8,'MaxFunEvals',500,'MaxIter',500,'Display','off');
+options = optimset('TolFun',1e-17,'TolX',1e-8,'MaxFunEvals',500,'MaxIter',500,'Display','iter');
 
 
 % Generate a matrix of 5-DOF solution vectors. One vector for each resolved testpoint
