@@ -19,7 +19,7 @@ MODELTYPE = 'exact';
 
 % Channel the DAQ to inspect. This does NOT directly corresponding to the sensor
 % channelLook at the DAQ pin mapping
-sensorsToTrack = [1 2];
+sensorsToTrack = [1 16];
 
 % Refresh rate of the position acquisition (Hz)
 refreshRate = 20;
@@ -55,7 +55,7 @@ while (~FS.Stop())
     %loglog((1:(length(ft2)/2))./(length(ft2)/2)*Fs*.5, smooth((abs(ft2(1:(length(ft2)/2)))/length(ft2)./sqrt(f_bin)),smoothing),'r'); %noise density
     %semilogy((1:(length(ft2)/2))./(length(ft2)/2)*Fs*.5, smooth((abs(ft2(1:(length(ft2)/2)))/length(ft2)),smoothing),'r'); %noise density
     %semilogy((1:(length(ft3)/2))./(length(ft3)/2)*Fs*.5, smooth((abs(ft3(1:(length(ft3)/2)))/length(ft3)),smoothing),'g'); %noise density
-    %plot((1:(length(ft)/2))./(length(ft)/2)*Fs*.5, smooth(20*log10(abs(ft2(1:(length(ft)/2)))/length(ft)),smoothing),'r'); %noise density
+    plot((1:(length(ft)/2))./(length(ft)/2)*Fs*.5, smooth(20*log10(abs(ft2(1:(length(ft)/2)))/length(ft)),smoothing),'r'); %noise density
     %plot((1:(length(ft)/2))./(length(ft)/2)*Fs*.5, smooth(20*log10(abs(ft3(1:(length(ft)/2)))/length(ft)),smoothing),'g'); %noise density
 
     
