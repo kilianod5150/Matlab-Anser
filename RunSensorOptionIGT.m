@@ -10,7 +10,7 @@
 global Fs;
 SYSTEM = '7x7';
 DAQ = 'nidaq621Xoem';
-BOARDID = 'Dev3';
+BOARDID = 'Dev1';
 SAMPLESIZE = 5000;
 MODELTYPE = 'exact';
 
@@ -20,7 +20,7 @@ IGTENABLE = 1;
 
 % Settings for the tracking system
 % List of sensors to initialise.
-sensorsToTrack = [1];
+sensorsToTrack = [5];
 
 % Aquisition refresh rate in Hertz
 refreshRate = 1000;

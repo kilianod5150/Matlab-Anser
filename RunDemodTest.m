@@ -6,17 +6,20 @@
 % For advanced users.
 % Use this file to test the output of the demodulator
 
+global Fs
 SYSTEM = '7x7';
 DAQ = 'nidaq621Xoem';
-BOARDID = 'Dev3';
-SAMPLESIZE = 50000;
+BOARDID = 'Dev1';
+SAMPLESIZE = 5000;
 MODELTYPE = 'exact';
+%Fs = 100e3;
+Ts=1/Fs;
 
-
-sensorsToTrack = [1];
-
+sensorsToTrack = [5];
+%Fs=400000/(length(sensorsToTrack)+1);
+Fs=100e3;
 % Aquisition refresh rate in Hertz
-refreshRate = 20;
+refreshRate = 50;
 
 % Call the setup function for the system.
 sys = fSysSetup(sensorsToTrack, SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);
@@ -25,8 +28,7 @@ FS = stoploop();
 
 
 
-Fs = 100e3;
-Ts=1/Fs;
+
 numSamples = SAMPLESIZE;
 
 % Specify the number of time samples, must be the same as the length of X
@@ -62,10 +64,13 @@ while (~FS.Stop())
    
    sys = fSysDAQUpdate(sys);
    sys = fSysGetField(sys);
+   sys = fSysGetCurrent(sys);
    plot(1:8,(sys.BField));
    %semilogy(1:8,abs((sys.BField)));
-   disp(sys.BField)
+   %disp(sys.BField)
+   %disp(sys.CoilCurrent)
    ylim([-5,5]);
+   %ylim([-.5,.5]);
    pause(1/refreshRate);
 
 end

@@ -17,7 +17,7 @@ Fs=100e3;
 
 % Place the sensor channels to use in this vector. Add further channels to
 % this vector if more sensors are required
-sensorsToTrack = [1];
+sensorsToTrack = [3];
 
 % Aquisition refresh rate in Hertz
 refreshRate = 1;

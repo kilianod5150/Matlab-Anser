@@ -14,17 +14,17 @@ global Fs
 SYSTEM = '7x7';
 DAQ = 'nidaq621Xoem';
 BOARDID = 'Dev1';
-SAMPLESIZE = 50000;
+SAMPLESIZE = 5000;
 MODELTYPE = 'exact';
 
 % Channel the DAQ to inspect. This does NOT directly corresponding to the sensor
 % channelLook at the DAQ pin mapping
-sensorsToTrack = [1 2];
+sensorsToTrack = [5];
 
 % Refresh rate of the position acquisition (Hz)
 refreshRate = 20;
-Fs=400000/(length(sensorsToTrack)+1);
-%Fs=100000;
+%Fs=400000/(length(sensorsToTrack)+1);
+Fs=100e3;
 sys = fSysSetup(sensorsToTrack,SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);
 
 % Get access to the global data structure used by the DAQ
@@ -49,11 +49,11 @@ while (~FS.Stop())
     semilogy((1:(length(ft)/2))./(length(ft)/2)*Fs*.5, smooth((abs(ft(1:(length(ft)/2)))/length(ft)./sqrt(f_bin)),smoothing)); %noise density
 
     hold on
-    ft2 = fft(sessionData(:, 3));
+    %ft2 = fft(sessionData(:, 3));
     ft3 = fft(sessionData(:, 1));
     %loglog((1:(length(ft2)/2))./(length(ft2)/2)*Fs*.5, smooth((abs(ft2(1:(length(ft2)/2)))/length(ft2)./sqrt(f_bin)),smoothing),'r'); %noise density
-    semilogy((1:(length(ft2)/2))./(length(ft2)/2)*Fs*.5, smooth((abs(ft2(1:(length(ft2)/2)))/length(ft2)./sqrt(f_bin)),smoothing),'r'); %noise density
-    semilogy((1:(length(ft3)/2))./(length(ft3)/2)*Fs*.5, smooth((abs(ft3(1:(length(ft3)/2)))/length(ft3)./sqrt(f_bin)),smoothing),'g'); %noise density
+    %semilogy((1:(length(ft2)/2))./(length(ft2)/2)*Fs*.5, smooth((abs(ft2(1:(length(ft2)/2)))/length(ft2)./sqrt(f_bin)),smoothing),'r'); %noise density
+    %semilogy((1:(length(ft3)/2))./(length(ft3)/2)*Fs*.5, smooth((abs(ft3(1:(length(ft3)/2)))/length(ft3)./sqrt(f_bin)),smoothing),'r'); %noise density
 
     %loglog((1:(length(ft3)/2))./(length(ft3)/2)*Fs*.5, smooth((abs(ft3(1:(length(ft3)/2)))/length(ft3)./sqrt(f_bin)),smoothing),'g'); %noise density
 

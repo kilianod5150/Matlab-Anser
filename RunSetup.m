@@ -15,5 +15,5 @@ MODELTYPE = 'exact';
 % [1,2] enabled. The returned object contains all the information regarding
 % the tracking system, including coil dimensions, calibration data and the
 % DAQ object.
-sensorsToTrack = [1];
+sensorsToTrack = [3];
 sys = fSysSetup(sensorsToTrack, SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);

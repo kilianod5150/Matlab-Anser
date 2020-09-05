@@ -22,7 +22,7 @@ MODELTYPE = 'exact';
 sensorsToTrack = [1];
 
 % Refresh rate of the position acquisition (Hz)
-refreshRate = 20;
+refreshRate = 1;
 %Fs=400000/(length(sensorsToTrack)+1);
 Fs=100000;
 sys = fSysSetup(sensorsToTrack,SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);
@@ -36,6 +36,7 @@ figure;
 smoothing=1;
 FS=stoploop();
 pause(1);
+index_wanted=1584;
 while (~FS.Stop())
     
     % Perform an FFT of the analog-in channels. The index is incremented by
@@ -43,7 +44,7 @@ while (~FS.Stop())
     % 1st column is the current reference signal for the transmitter coils.
     % This reference current signal can be viewed in the FFT by selecting
     % the first column of sessionData (i.e. '1')
-    ft = fft(sessionData(:, 2));
+    ft = fft(sessionData(:, 1));
     %plot((1:(length(ft)/2))./(length(ft)/2)*Fs*.5, 20*log10(abs(ft(1:(length(ft)/2)))/length(ft)));
     %loglog((1:(length(ft)/2))./(length(ft)/2)*Fs*.5, smooth((abs(ft(1:(length(ft)/2)))/length(ft)./sqrt(f_bin)),smoothing)); %noise density
     %semilogy((1:(length(ft)/2))./(length(ft)/2)*Fs*.5, smooth((abs(ft(1:(length(ft)/2)))/length(ft)),smoothing)); %noise density
@@ -51,7 +52,13 @@ while (~FS.Stop())
 
     hold on
     %ft2 = fft(sessionData(:, 3));
-    ft3 = fft(sessionData(:, 1));
+    ft3 = fft(sessionData(:, 2));
+        plot((1:(length(ft3)/2))./(length(ft3)/2)*Fs*.5, smooth(20*log10(abs(ft3(1:(length(ft3)/2)))/length(ft3)),smoothing),'r'); %noise density
+        ft_mag=(abs(ft(1:(length(ft)/2)))/length(ft));
+        ft3_mag=(abs(ft3(1:(length(ft3)/2)))/length(ft3));
+        current=ft_mag(index_wanted)
+        signal=ft3_mag(index_wanted)
+
     %loglog((1:(length(ft2)/2))./(length(ft2)/2)*Fs*.5, smooth((abs(ft2(1:(length(ft2)/2)))/length(ft2)./sqrt(f_bin)),smoothing),'r'); %noise density
     %semilogy((1:(length(ft2)/2))./(length(ft2)/2)*Fs*.5, smooth((abs(ft2(1:(length(ft2)/2)))/length(ft2)),smoothing),'r'); %noise density
     %semilogy((1:(length(ft3)/2))./(length(ft3)/2)*Fs*.5, smooth((abs(ft3(1:(length(ft3)/2)))/length(ft3)),smoothing),'g'); %noise density

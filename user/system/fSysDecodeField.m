@@ -31,8 +31,8 @@ objectiveCoil3D = @(currentPandO)objectiveCoilSquareCalc3D(currentPandO, sys, sy
     options.StepTolerance=1e-6;
     options.FunctionTolerance=1e-16;
     % Initialises the least squares solver.
-    %[solution,resnorm_store,residual,exitflag,output,~,jacobian]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,sys.lqOptions);
-     [solution,resnorm_store,residual,exitflag,output,~,jacobian]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,options);
+     [solution,resnorm_store,residual,exitflag,output,~,jacobian]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,sys.lqOptions);
+     %[solution,resnorm_store,residual,exitflag,output,~,jacobian]= lsqnonlin(objectiveCoil3D, sys.estimateInit(sys.SensorNo,:),lowerbound,upperbound,options);
     
     resnorm_percentage_mean= 100*mean(abs(residual./sys.BField));
    
