@@ -6,21 +6,39 @@ clear Hx Hy Hz x y z xx yy zz xxx yyy zzz HxMap HyMap HzMap Hx_check Hy_check Hz
 %load('grid_5x5x5_duplo_3_axis_new_order.mat');
 %load('grid_5x5x5_duplo_3_axis_new_order_redux.mat');
 %load('grid_5x5x5_duplo_3_axis_new_order_redux_shield.mat');
-load('grid_5x5x5_duplo_3_axis_new_order_redux_shield_steel.mat');
-
+%load('grid_5x5x5_duplo_3_axis_new_order_redux_shield_steel.mat');
+%load('grid_5x5x5_42cm_transmitter2.mat');
+%load('grid_5x5x5_42cm_transmitter_steel_shield.mat');
+load('steel_shield.mat');
 u0=4*pi*1e-7;
+
+% z_start=.10;
+% z_end=0.292;
+% x_start=-2*(31.75e-3);
+% x_end=2*(31.75e-3);
+% y_start=-2*(31.75e-3);
+% y_end=2*(31.75e-3);
+% 
+% numpoints=5;
+
 z_start=.10;
 z_end=0.292;
-x_start=-2.5*(31.75e-3);
-x_end=2.5*(31.75e-3);
-y_start=-2.5*(31.75e-3);
-y_end=2.5*(31.75e-3);
+x_start=-3*(31.75e-3);
+x_end=3*(31.75e-3);
+y_start=-3*(31.75e-3);
+y_end=3*(31.75e-3);
 
-numpoints=5;
+numpoints=13;
+numpoints_z=6;
 
-z=linspace(z_start,z_end,numpoints)+.0026;
-x=linspace(x_start,x_end,numpoints)+.001;
-y=linspace(y_start,y_end,numpoints)+.0106;
+z=linspace(z_start,z_end,numpoints_z)-.005;
+x=linspace(x_start,x_end,numpoints);
+y=linspace(y_start,y_end,numpoints)+.0038;
+
+
+
+
+
 
 % x=fliplr(linspace(x_start,x_end,numpoints));
 %y=fliplr(y);
@@ -30,9 +48,9 @@ y=linspace(y_start,y_end,numpoints)+.0106;
 
 
 
-xxx=reshape(xx,[1 numpoints^3]);
-yyy=reshape(yy,[1 numpoints^3]);
-zzz=reshape(zz,[1 numpoints^3]);
+xxx=reshape(xx,[1 numpoints_z*numpoints^2]);
+yyy=reshape(yy,[1 numpoints_z*numpoints^2]);
+zzz=reshape(zz,[1 numpoints_z*numpoints^2]);
 
 figure
 hold on
@@ -47,7 +65,7 @@ xlabel('x');
 ylabel('y');
 zlabel('z');
 
-for i=1:numpoints^3
+for i=1:numpoints_z*numpoints^2
     %[Hx(:,i),Hy(:,i),Hz(:,i)]= spiralCoilFieldCalcMatrix(1,sys.xcoil,sys.ycoil,sys.zcoil,xxx(i),yyy(i),zzz(i));
     Hx(:,i)=BSave(:,1,i)/u0;
     Hy(:,i)=BSave(:,2,i)/u0;
@@ -78,9 +96,9 @@ for i=1:8;
   % HxMap{i}=griddedInterpolant(X,Y,Z,permute(reshape(Hx(i,:),[numpoints numpoints numpoints]),P),Method,ExtrapolationMethod);
   % HyMap{i}=griddedInterpolant(X,Y,Z,permute(reshape(Hy(i,:),[numpoints numpoints numpoints]),P),Method,ExtrapolationMethod);
   %HzMap{i}=griddedInterpolant(X,Y,Z,permute(reshape(Hz(i,:),[numpoints numpoints numpoints]),P),Method,ExtrapolationMethod);
-   HxMap{i}=griddedInterpolant(xx,yy,zz,reshape(Hx(i,:),[numpoints numpoints numpoints]),Method,ExtrapolationMethod);
-   HyMap{i}=griddedInterpolant(xx,yy,zz,reshape(Hy(i,:),[numpoints numpoints numpoints]),Method,ExtrapolationMethod);
-   HzMap{i}=griddedInterpolant(xx,yy,zz,reshape(Hz(i,:),[numpoints numpoints numpoints]),Method,ExtrapolationMethod);
+   HxMap{i}=griddedInterpolant(xx,yy,zz,reshape(Hx(i,:),[numpoints numpoints numpoints_z]),Method,ExtrapolationMethod);
+   HyMap{i}=griddedInterpolant(xx,yy,zz,reshape(Hy(i,:),[numpoints numpoints numpoints_z]),Method,ExtrapolationMethod);
+   HzMap{i}=griddedInterpolant(xx,yy,zz,reshape(Hz(i,:),[numpoints numpoints numpoints_z]),Method,ExtrapolationMethod);
 end
 
 save('mapping/fieldmap.mat','HxMap','HyMap','HzMap')
@@ -124,9 +142,9 @@ scatter3(xxx(range),yyy(range),Hz(coil,range),'r')
 
 
 
-Hx_error=mean(Hx_check./Hx,2)
-Hy_error=mean(Hy_check./Hy,2)
-Hz_error=mean(Hz_check./Hz,2)
+Hx_error=mean(Hx_check./Hx,2);
+Hy_error=mean(Hy_check./Hy,2);
+Hz_error=mean(Hz_check./Hz,2);
 
 figure
 subplot(3,1,1)

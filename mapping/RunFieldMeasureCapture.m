@@ -25,16 +25,36 @@ string_cell{3}='Bz';
 sys = fSysSetup(sensorsToTrack, SYSTEM, DAQ, BOARDID, SAMPLESIZE, MODELTYPE);
 
 
-N = 25;
+N = 169;
 
-clear B_temp BSave
+per_row=N^(1/2);
+
+[xx,yy]=ndgrid(1:per_row,1:per_row);
+xxx=reshape(xx,[1 N]);
+yyy=reshape(yy,[1 N]);
+
+start_at=1; %default is 1
+if start_at==1
+    clear BSave
+end
+
+clear B_temp 
+
 %figure;
 %FS=stoploop();
 
 %while (~FS.Stop())
-for i=1:N
-       
-   fprintf('Point %d\n', i)
+
+close all
+figure
+hold on
+xlim([-.5 per_row+1]);
+ylim([-.5 per_row+1]);
+
+for i=start_at:N
+   scatter(xxx(i),yyy(i),'filled')    
+  % fprintf('Point %d\n', i)
+   fprintf('Point %d, Row %d\n', i,yyy(i))
    pause;
    
    for j=1:length(sensorsToTrack);
